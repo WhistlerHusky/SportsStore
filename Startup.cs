@@ -26,7 +26,7 @@ namespace SportsStore
         {
             services.AddEntityFrameworkSqlServer()
                 .AddOptions()
-                .AddDbContext<DataContext>(options => options.UseSqlServer(this.Configuration["ConnectionString"]));
+                .AddDbContext<DataContext>(options => options.UseSqlServer(this.Configuration["Data:Products:ConnectionString"]));
 
             services.AddMvc();
         }
@@ -65,8 +65,6 @@ namespace SportsStore
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-     
         }
     }
 }

@@ -33,7 +33,11 @@ namespace SportsStore.Migrations
 
                     b.Property<decimal>("Price");
 
+                    b.Property<long?>("SupplierId");
+
                     b.HasKey("ProductId");
+
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
                 });
@@ -43,9 +47,13 @@ namespace SportsStore.Migrations
                     b.Property<long>("RatingId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<long?>("ProductId");
+
                     b.Property<int>("Stars");
 
                     b.HasKey("RatingId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Ratings");
                 });
@@ -64,6 +72,20 @@ namespace SportsStore.Migrations
                     b.HasKey("SupplierId");
 
                     b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("SportsStore.Models.Product", b =>
+                {
+                    b.HasOne("SportsStore.Models.Supplier", "Supplier")
+                        .WithMany("Products")
+                        .HasForeignKey("SupplierId");
+                });
+
+            modelBuilder.Entity("SportsStore.Models.Rating", b =>
+                {
+                    b.HasOne("SportsStore.Models.Product", "Product")
+                        .WithMany("Ratings")
+                        .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618
         }
